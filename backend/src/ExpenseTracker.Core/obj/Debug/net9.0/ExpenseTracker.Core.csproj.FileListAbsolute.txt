@@ -1,0 +1,12 @@
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ExpenseTracker.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ExpenseTracker.Core.AssemblyInfoInputs.cache
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ExpenseTracker.Core.AssemblyInfo.cs
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ExpenseTracker.Core.csproj.CoreCompileInputs.cache
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\bin\Debug\net9.0\ExpenseTracker.Core.deps.json
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\bin\Debug\net9.0\ExpenseTracker.Core.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\bin\Debug\net9.0\ExpenseTracker.Core.pdb
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ExpenseTracker.Core.csproj.AssemblyReference.cache
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ExpenseTracker.Core.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\refint\ExpenseTracker.Core.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ExpenseTracker.Core.pdb
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Core\obj\Debug\net9.0\ref\ExpenseTracker.Core.dll

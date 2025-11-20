@@ -1,0 +1,11 @@
+<div class="min-h-screen bg-gray-100 flex flex-col">
+  <app-navbar *ngIf="authService.currentUser$ | async"></app-navbar>
+
+  <div class="flex flex-1 overflow-hidden">
+    <app-sidebar *ngIf="authService.currentUser$ | async" class="hidden md:block w-64 flex-shrink-0"></app-sidebar>
+
+    <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

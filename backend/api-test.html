@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"] {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        input[type="file"] {
+            margin: 10px 0;
+        }
+
+        .response {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+
+        .success {
+            border-left: 4px solid #28a745;
+        }
+
+        .error {
+            border-left: 4px solid #dc3545;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 Expense Tracker API Test</h1>
+
+        <!-- Registration -->
+        <div class="section">
+            <h2>1. Register User</h2>
+            <input type="text" id="regUsername" placeholder="Username" value="testuser">
+            <input type="email" id="regEmail" placeholder="Email" value="test@example.com">
+            <input type="password" id="regPassword" placeholder="Password" value="Test123!">
+            <button onclick="register()">Register</button>
+            <div id="regResponse" class="response"></div>
+        </div>
+
+        <!-- Login -->
+        <div class="section">
+            <h2>2. Login</h2>
+            <input type="email" id="loginEmail" placeholder="Email" value="test@example.com">
+            <input type="password" id="loginPassword" placeholder="Password" value="Test123!">
+            <button onclick="login()">Login</button>
+            <div id="loginResponse" class="response"></div>
+        </div>
+
+        <!-- OCR Receipt Scan -->
+        <div class="section">
+            <h2>3. Scan Receipt (OCR - No Login Required)</h2>
+            <p>Select a receipt image (JPEG, PNG, or WebP):</p>
+            <input type="file" id="receiptFile" accept="image/jpeg,image/jpg,image/png,image/webp">
+            <button onclick="scanReceipt()">Scan Receipt</button>
+            <div id="scanResponse" class="response"></div>
+        </div>
+
+        <!-- Create Expense -->
+        <div class="section">
+            <h2>4. Create Expense (Login Required)</h2>
+            <input type="text" id="expenseDesc" placeholder="Description" value="Grocery Shopping">
+            <input type="number" id="expenseAmount" placeholder="Amount" value="45.50">
+            <input type="number" id="expenseCategoryId" placeholder="Category ID" value="1">
+            <button onclick="createExpense()">Create Expense</button>
+            <div id="expenseResponse" class="response"></div>
+        </div>
+
+        <!-- Get Expenses -->
+        <div class="section">
+            <h2>5. Get Expenses (Login Required)</h2>
+            <button onclick="getExpenses()">Get All Expenses</button>
+            <div id="getExpensesResponse" class="response"></div>
+        </div>
+
+        <!-- Dashboard -->
+        <div class="section">
+            <h2>6. Get Dashboard (Login Required)</h2>
+            <button onclick="getDashboard()">Get Dashboard</button>
+            <div id="dashboardResponse" class="response"></div>
+        </div>
+
+        <!-- Logout -->
+        <div class="section">
+            <h2>7. Logout</h2>
+            <button onclick="logout()">Logout</button>
+            <div id="logoutResponse" class="response"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5273/api';
+
+        async function register() {
+            const response = document.getElementById('regResponse');
+            try {
+                const res = await fetch(`${API_BASE}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: document.getElementById('regUsername').value,
+                        email: document.getElementById('regEmail').value,
+                        password: document.getElementById('regPassword').value
+                    })
+                });
+                const data = await res.json();
+                response.textContent = JSON.stringify(data, null, 2);
+                response.className = res.ok ? 'response success' : 'response error';
+            } catch (error) {
+                response.textContent = 'Error: ' + error.message;
+                response.className = 'response error';
+            }
+        }
+
+        async function login() {
+            const response = document.getElementById('loginResponse');
+            try {
+                const res = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: document.getElementById('loginEmail').value,
+                        password: document.getElementById('loginPassword').value
+                    })
+                });
+                const data = await res.json();
+                response.textContent = JSON.stringify(data, null, 2);
+                response.className = res.ok ? 'response success' : 'response error';
+            } catch (error) {
+                response.textContent = 'Error: ' + error.message;
+                response.className = 'response error';
+            }
+        }
+
+        async function scanReceipt() {
+            const response = document.getElementById('scanResponse');
+            const fileInput = document.getElementById('receiptFile');
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                response.textContent = 'Please select an image file first';
+                response.className = 'response error';
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                response.textContent = 'Scanning receipt... Please wait...';
+                response.className = 'response';
+
+                const res = await fetch(`${API_BASE}/receipts/scan`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await res.json();
+                response.textContent = JSON.stringify(data, null, 2);
+                response.className = res.ok ? 'response success' : 'response error';
+            } catch (error) {
+                response.textContent = 'Error: ' + error.message;
+                response.className = 'response error';
+            }
+        }
+
+        async function createExpense() {
+            const response = document.getElementById('expenseResponse');
+            try {
+                const res = await fetch(`${API_BASE}/expenses`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        description: document.getElementById('expenseDesc').value,
+                        amount: parseFloat(document.getElementById('expenseAmount').value),
+                        categoryId: parseInt(document.getElementById('expenseCategoryId').value),
+                        date: new Date().toISOString()
+                    })
+                });
+                const data = await res.json();
+                response.textContent = JSON.stringify(data, null, 2);
+                response.className = res.ok ? 'response success' : 'response error';
+            } catch (error) {
+                response.textContent = 'Error: ' + error.message;
+                response.className = 'response error';
+            }
+        }
+
+        async function getExpenses() {
+            const response = document.getElementById('getExpensesResponse');
+            try {
+                const res = await fetch(`${API_BASE}/expenses`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                response.textContent = JSON.stringify(data, null, 2);
+                response.className = res.ok ? 'response success' : 'response error';
+            } catch (error) {
+                response.textContent = 'Error: ' + error.message;
+                response.className = 'response error';
+            }
+        }
+
+        async function getDashboard() {
+            const response = document.getElementById('dashboardResponse');
+            try {
+                const res = await fetch(`${API_BASE}/dashboard`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                response.textContent = JSON.stringify(data, null, 2);
+                response.className = res.ok ? 'response success' : 'response error';
+            } catch (error) {
+                response.textContent = 'Error: ' + error.message;
+                response.className = 'response error';
+            }
+        }
+
+        async function logout() {
+            const response = document.getElementById('logoutResponse');
+            try {
+                const res = await fetch(`${API_BASE}/auth/logout`, {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+                const data = await res.json();
+                response.textContent = JSON.stringify(data, null, 2);
+                response.className = res.ok ? 'response success' : 'response error';
+            } catch (error) {
+                response.textContent = 'Error: ' + error.message;
+                response.className = 'response error';
+            }
+        }
+    </script>
+</body>
+
+</html>

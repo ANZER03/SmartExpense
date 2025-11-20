@@ -1,0 +1,55 @@
+@baseUrl = http://localhost:5273/api
+
+### 1. Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+  "username": "testuser3",
+  "email": "test3@example.com",
+  "password": "Test123!"
+}
+
+### 2. Login
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "test3@example.com",
+  "password": "Test123!"
+}
+
+### 3. Scan Receipt (requires login and image file)
+# Note: You need to replace this with a multipart form request
+# This is a placeholder - use a tool like Postman or create a test image
+POST {{baseUrl}}/receipts/scan
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="file"; filename="receipt.jpg"
+Content-Type: image/jpeg
+
+< ./test-receipt.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
+
+### 4. Get all expenses (requires login)
+GET {{baseUrl}}/expenses
+Accept: application/json
+
+### 5. Create an expense (requires login)
+POST {{baseUrl}}/expenses
+Content-Type: application/json
+
+{
+  "description": "Grocery Shopping",
+  "amount": 50.00,
+  "categoryId": 1,
+  "date": "2025-11-20T14:00:00Z"
+}
+
+### 6. Get Dashboard (requires login)
+GET {{baseUrl}}/dashboard
+Accept: application/json
+
+### 7. Logout
+POST {{baseUrl}}/auth/logout

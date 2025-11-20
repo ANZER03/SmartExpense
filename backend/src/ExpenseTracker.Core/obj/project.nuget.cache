@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "y+2xH7QHxR0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\UTENTE\\Desktop\\Projects\\budget_tracker\\backend\\src\\ExpenseTracker.Core\\ExpenseTracker.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\UTENTE\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512"
+  ],
+  "logs": []
+}

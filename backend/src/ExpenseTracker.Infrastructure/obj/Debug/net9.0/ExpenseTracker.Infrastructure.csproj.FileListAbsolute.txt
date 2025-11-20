@@ -1,0 +1,17 @@
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\bin\Debug\net9.0\ExpenseTracker.Infrastructure.deps.json
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\bin\Debug\net9.0\ExpenseTracker.Infrastructure.runtimeconfig.json
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\bin\Debug\net9.0\ExpenseTracker.Infrastructure.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\bin\Debug\net9.0\ExpenseTracker.Infrastructure.pdb
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\bin\Debug\net9.0\ExpenseTracker.Core.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\bin\Debug\net9.0\ExpenseTracker.Core.pdb
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.AssemblyInfo.cs
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseT.546500FC.Up2Date
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\refint\ExpenseTracker.Infrastructure.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.pdb
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ExpenseTracker.Infrastructure.genruntimeconfig.cache
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net9.0\ref\ExpenseTracker.Infrastructure.dll
