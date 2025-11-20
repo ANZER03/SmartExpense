@@ -2,10 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExpenseService, DashboardData } from '../../services/expense.service';
 
+import { ExpenseByCategoryChartComponent } from '../../components/charts/expense-by-category-chart/expense-by-category-chart.component';
+import { ExpenseByMonthChartComponent } from '../../components/charts/expense-by-month-chart/expense-by-month-chart.component';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ExpenseByCategoryChartComponent, ExpenseByMonthChartComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })

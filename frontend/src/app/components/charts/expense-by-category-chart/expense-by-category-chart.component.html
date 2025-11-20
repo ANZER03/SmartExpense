@@ -1,0 +1,7 @@
+<div class="relative h-64 w-full">
+    <canvas baseChart [data]="doughnutChartData" [options]="doughnutChartOptions" [type]="doughnutChartType">
+    </canvas>
+</div>
+<div *ngIf="data.length === 0" class="absolute inset-0 flex items-center justify-center text-muted-foreground text-sm">
+    No data available
+</div>

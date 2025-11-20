@@ -94,6 +94,32 @@ public class ExpenseService : IExpenseService
     public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync(int userId)
     {
         var categories = await _unitOfWork.Repository<Category>().FindAsync(c => c.UserId == userId);
+        
+        // If user has no categories, create default ones
+        if (!categories.Any())
+        {
+            var defaultCategories = new List<Category>
+            {
+                new Category { Name = "Food & Dining", Color = "#FF6B6B", UserId = userId },
+                new Category { Name = "Transportation", Color = "#4ECDC4", UserId = userId },
+                new Category { Name = "Shopping", Color = "#45B7D1", UserId = userId },
+                new Category { Name = "Entertainment", Color = "#FFA07A", UserId = userId },
+                new Category { Name = "Bills & Utilities", Color = "#98D8C8", UserId = userId },
+                new Category { Name = "Healthcare", Color = "#F7DC6F", UserId = userId },
+                new Category { Name = "Education", Color = "#BB8FCE", UserId = userId },
+                new Category { Name = "Other", Color = "#95A5A6", UserId = userId }
+            };
+
+            foreach (var category in defaultCategories)
+            {
+                await _unitOfWork.Repository<Category>().AddAsync(category);
+            }
+            await _unitOfWork.CompleteAsync();
+            
+            // Fetch the newly created categories
+            categories = await _unitOfWork.Repository<Category>().FindAsync(c => c.UserId == userId);
+        }
+        
         return _mapper.Map<IEnumerable<CategoryDto>>(categories);
     }
 }

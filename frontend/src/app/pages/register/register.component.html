@@ -1,71 +1,68 @@
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+<div class="min-h-screen flex items-center justify-center bg-muted/30 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md space-y-8 animate-fade-in">
+        <div class="text-center">
+            <h2 class="text-3xl font-bold tracking-tight text-foreground">
                 Create your account
             </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
+            <p class="mt-2 text-sm text-muted-foreground">
                 Or
-                <a routerLink="/login" class="font-medium text-indigo-600 hover:text-indigo-500">
+                <a routerLink="/login" class="font-medium text-foreground hover:underline underline-offset-4">
                     sign in to your existing account
                 </a>
             </p>
         </div>
-        <form class="mt-8 space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                    <label for="username" class="sr-only">Username</label>
-                    <input id="username" name="username" type="text" required formControlName="username"
-                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Username">
-                </div>
-                <div>
-                    <label for="email-address" class="sr-only">Email address</label>
-                    <input id="email-address" name="email" type="email" autocomplete="email" required
-                        formControlName="email"
-                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Email address">
-                </div>
-                <div>
-                    <label for="password" class="sr-only">Password</label>
-                    <input id="password" name="password" type="password" autocomplete="new-password" required
-                        formControlName="password"
-                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Password">
-                </div>
-                <div>
-                    <label for="confirm-password" class="sr-only">Confirm Password</label>
-                    <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password"
-                        required formControlName="confirmPassword"
-                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                        placeholder="Confirm Password">
-                </div>
-            </div>
 
-            <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched"
-                class="text-red-500 text-sm text-center">
-                Passwords do not match
-            </div>
+        <div class="card p-8">
+            <form class="space-y-6" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label for="username" class="text-sm font-medium text-foreground">
+                            Username
+                        </label>
+                        <input id="username" name="username" type="text" required formControlName="username"
+                            class="input w-full" placeholder="Enter your username">
+                    </div>
 
-            <div *ngIf="error" class="text-red-500 text-sm text-center">
-                {{ error }}
-            </div>
+                    <div class="space-y-2">
+                        <label for="email-address" class="text-sm font-medium text-foreground">
+                            Email address
+                        </label>
+                        <input id="email-address" name="email" type="email" autocomplete="email" required
+                            formControlName="email" class="input w-full" placeholder="name@example.com">
+                    </div>
 
-            <div>
-                <button type="submit" [disabled]="loading || registerForm.invalid"
-                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50">
-                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <!-- User Add Icon -->
-                        <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400"
-                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                            aria-hidden="true">
-                            <path
-                                d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
-                        </svg>
-                    </span>
+                    <div class="space-y-2">
+                        <label for="password" class="text-sm font-medium text-foreground">
+                            Password
+                        </label>
+                        <input id="password" name="password" type="password" autocomplete="new-password" required
+                            formControlName="password" class="input w-full" placeholder="Create a password">
+                    </div>
+
+                    <div class="space-y-2">
+                        <label for="confirm-password" class="text-sm font-medium text-foreground">
+                            Confirm Password
+                        </label>
+                        <input id="confirm-password" name="confirmPassword" type="password" autocomplete="new-password"
+                            required formControlName="confirmPassword" class="input w-full"
+                            placeholder="Confirm your password">
+                    </div>
+                </div>
+
+                <div *ngIf="registerForm.hasError('mismatch') && registerForm.get('confirmPassword')?.touched"
+                    class="text-sm text-destructive text-center bg-destructive/10 p-3 rounded-md border border-destructive/20">
+                    Passwords do not match
+                </div>
+
+                <div *ngIf="error"
+                    class="text-sm text-destructive text-center bg-destructive/10 p-3 rounded-md border border-destructive/20">
+                    {{ error }}
+                </div>
+
+                <button type="submit" [disabled]="loading || registerForm.invalid" class="btn btn-primary w-full h-10">
                     {{ loading ? 'Creating account...' : 'Create account' }}
                 </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>

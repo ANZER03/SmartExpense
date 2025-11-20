@@ -12,6 +12,7 @@ export interface ReceiptData {
   merchantName: string;
   totalAmount: number;
   transactionDate: string;
+  suggestedCategoryName?: string;
   items?: ReceiptItem[];
   rawText?: string;
 }

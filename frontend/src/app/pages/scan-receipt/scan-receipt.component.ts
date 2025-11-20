@@ -69,8 +69,25 @@ export class ScanReceiptComponent {
       description: data.merchantName || 'Unknown Merchant',
       amount: data.totalAmount || 0,
       date: data.transactionDate ? new Date(data.transactionDate).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10),
-      categoryId: 0 // User needs to select category
+      categoryId: 0 // Will be set if suggested category is found
     };
+
+    // If LLM suggested a category, try to find and pre-select it
+    if (data.suggestedCategoryName) {
+      this.expenseService.getCategories().subscribe({
+        next: (categories) => {
+          const matchedCategory = categories.find(c =>
+            c.name.toLowerCase() === data.suggestedCategoryName?.toLowerCase()
+          );
+          if (matchedCategory && this.expenseFromReceipt) {
+            this.expenseFromReceipt.categoryId = matchedCategory.id;
+          }
+        },
+        error: (err) => {
+          console.error('Failed to load categories:', err);
+        }
+      });
+    }
   }
 
   onSaveExpense(expenseData: Partial<Expense>) {

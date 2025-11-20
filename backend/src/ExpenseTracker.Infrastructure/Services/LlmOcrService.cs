@@ -19,7 +19,7 @@ public class LlmOcrService : IOcrService
         _httpClient = httpClient;
     }
 
-    public async Task<ReceiptDto> ScanReceiptAsync(Stream imageStream, string contentType)
+    public async Task<ReceiptDto> ScanReceiptAsync(Stream imageStream, string contentType, IEnumerable<CategoryDto> availableCategories)
     {
         var apiKey = _configuration["Gemini:ApiKey"];
         if (string.IsNullOrEmpty(apiKey))
@@ -43,7 +43,11 @@ public class LlmOcrService : IOcrService
             _ => "image/jpeg"
         };
 
-        // Create request payload with structured output
+        // Build category list for LLM
+        var categoryNames = availableCategories.Select(c => c.Name).ToList();
+        var categoryListText = string.Join(", ", categoryNames);
+
+        // Create request payload with structured output including category prediction
         var requestPayload = new
         {
             contents = new[]
@@ -62,11 +66,20 @@ public class LlmOcrService : IOcrService
                         },
                         new
                         {
-                            text = @"Analyze this receipt image and extract the following information in JSON format:
+                            text = $@"Analyze this receipt image and extract the following information in JSON format:
 - merchantName: The name of the store/merchant
 - totalAmount: The total amount paid (as a decimal number)
 - transactionDate: The date of the transaction (in ISO 8601 format: YYYY-MM-DD)
-- items: Array of items purchased (optional, if visible)
+- suggestedCategory: Based on the merchant name and items purchased, suggest the MOST APPROPRIATE category from this list: [{categoryListText}]
+  Choose the category that best matches the type of purchase. For example:
+  * Restaurants, cafes, food stores -> Food & Dining
+  * Gas stations, uber, taxi -> Transportation
+  * Clothing stores, electronics -> Shopping
+  * Movies, games, entertainment venues -> Entertainment
+  * Electricity, water, internet bills -> Bills & Utilities
+  * Pharmacies, hospitals, clinics -> Healthcare
+  * Books, courses, schools -> Education
+  * If unsure -> Other
 
 If any field is not clearly visible, use null for that field.
 Return ONLY valid JSON, no additional text."
@@ -85,21 +98,9 @@ Return ONLY valid JSON, no additional text."
                         merchantName = new { type = "string" },
                         totalAmount = new { type = "number" },
                         transactionDate = new { type = "string" },
-                        items = new
-                        {
-                            type = "array",
-                            items = new
-                            {
-                                type = "object",
-                                properties = new
-                                {
-                                    name = new { type = "string" },
-                                    price = new { type = "number" }
-                                }
-                            }
-                        }
+                        suggestedCategory = new { type = "string" }
                     },
-                    required = new[] { "merchantName", "totalAmount", "transactionDate" }
+                    required = new[] { "merchantName", "totalAmount", "transactionDate", "suggestedCategory" }
                 }
             }
         };
@@ -144,12 +145,23 @@ Return ONLY valid JSON, no additional text."
             throw new Exception("Failed to parse receipt data from Gemini response");
         }
 
+        // Validate suggested category against available categories
+        var suggestedCategory = receiptData.SuggestedCategory;
+        if (!string.IsNullOrEmpty(suggestedCategory) &&
+            !categoryNames.Any(c => c.Equals(suggestedCategory, StringComparison.OrdinalIgnoreCase)))
+        {
+            // If LLM suggested a category not in our list, default to "Other"
+            suggestedCategory = categoryNames.FirstOrDefault(c => c.Equals("Other", StringComparison.OrdinalIgnoreCase))
+                              ?? categoryNames.FirstOrDefault();
+        }
+
         // Convert to ReceiptDto
         return new ReceiptDto
         {
             MerchantName = receiptData.MerchantName ?? "Unknown Merchant",
             TotalAmount = receiptData.TotalAmount,
             TransactionDate = ParseTransactionDate(receiptData.TransactionDate),
+            SuggestedCategoryName = suggestedCategory,
             RawText = extractedText
         };
     }
@@ -201,6 +213,9 @@ Return ONLY valid JSON, no additional text."
 
         [JsonPropertyName("transactionDate")]
         public string? TransactionDate { get; set; }
+
+        [JsonPropertyName("suggestedCategory")]
+        public string? SuggestedCategory { get; set; }
 
         [JsonPropertyName("items")]
         public List<ReceiptItem>? Items { get; set; }

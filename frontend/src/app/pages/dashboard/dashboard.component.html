@@ -1,108 +1,109 @@
-<div class="space-y-6">
-    <h1 class="text-2xl font-semibold text-gray-900">Dashboard</h1>
-
-    <div *ngIf="loading" class="text-center py-10">
-        <p class="text-gray-500">Loading dashboard...</p>
+<div class="space-y-8 animate-fade-in">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight text-foreground">Dashboard</h1>
+        <p class="text-muted-foreground mt-1">Overview of your expenses and budget</p>
     </div>
 
-    <div *ngIf="error" class="bg-red-50 border-l-4 border-red-400 p-4">
-        <div class="flex">
-            <div class="flex-shrink-0">
-                <svg class="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                        clip-rule="evenodd" />
-                </svg>
-            </div>
-            <div class="ml-3">
-                <p class="text-sm text-red-700">{{ error }}</p>
-            </div>
+    <div *ngIf="loading" class="flex items-center justify-center py-12">
+        <p class="text-muted-foreground">Loading dashboard...</p>
+    </div>
+
+    <div *ngIf="error" class="card p-4 border-destructive bg-destructive/10">
+        <div class="flex items-start gap-3">
+            <svg class="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                    clip-rule="evenodd" />
+            </svg>
+            <p class="text-sm text-destructive">{{ error }}</p>
         </div>
     </div>
 
-    <div *ngIf="dashboardData" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div *ngIf="dashboardData" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <!-- Total Spent Card -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-5 w-0 flex-1">
-                        <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Total Spent</dt>
-                            <dd class="text-3xl font-semibold text-gray-900">${{ dashboardData.totalSpent |
-                                number:'1.2-2' }}</dd>
-                        </dl>
-                    </div>
+        <div class="card p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <div class="space-y-1">
+                    <p class="text-sm font-medium text-muted-foreground">Total Spent</p>
+                    <p class="text-3xl font-bold text-foreground">${{ dashboardData.totalSpent | number:'1.2-2' }}</p>
+                </div>
+                <div class="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                    <svg class="h-6 w-6 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
             </div>
         </div>
 
         <!-- Monthly Budget Card -->
-        <div class="bg-white overflow-hidden shadow rounded-lg">
-            <div class="p-5">
-                <div class="flex items-center">
-                    <div class="flex-shrink-0">
-                        <svg class="h-6 w-6 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9 7h6m0 3.666V14m-7 2.176a4 4 0 116.458-2.88M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                    </div>
-                    <div class="ml-5 w-0 flex-1">
-                        <dl>
-                            <dt class="text-sm font-medium text-gray-500 truncate">Monthly Budget</dt>
-                            <dd class="text-3xl font-semibold text-gray-900">${{ dashboardData.monthlyBudget |
-                                number:'1.2-2' }}</dd>
-                        </dl>
-                    </div>
+        <div class="card p-6 hover:shadow-md transition-shadow">
+            <div class="flex items-center justify-between">
+                <div class="space-y-1">
+                    <p class="text-sm font-medium text-muted-foreground">Monthly Budget</p>
+                    <p class="text-3xl font-bold text-foreground">${{ dashboardData.monthlyBudget | number:'1.2-2' }}
+                    </p>
+                </div>
+                <div class="h-12 w-12 rounded-full bg-muted flex items-center justify-center">
+                    <svg class="h-6 w-6 text-muted-foreground" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 7h6m0 3.666V14m-7 2.176a4 4 0 116.458-2.88M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Recent Expenses -->
-    <div *ngIf="dashboardData" class="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Expenses</h3>
+    <!-- Charts Section -->
+    <div *ngIf="dashboardData" class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Expenses by Category Chart -->
+        <div class="card p-6">
+            <h3 class="text-lg font-semibold text-foreground mb-4">Expenses by Category</h3>
+            <app-expense-by-category-chart [data]="dashboardData.expensesByCategory"></app-expense-by-category-chart>
         </div>
-        <div class="border-t border-gray-200">
-            <ul class="divide-y divide-gray-200">
-                <li *ngFor="let expense of dashboardData.recentExpenses" class="px-4 py-4 sm:px-6 hover:bg-gray-50">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center">
-                            <div class="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center text-white font-bold"
-                                [style.background-color]="expense.categoryColor || '#ccc'">
-                                {{ expense.categoryName?.charAt(0) || '?' }}
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-sm font-medium text-indigo-600 truncate">{{ expense.description }}
-                                </div>
-                                <div class="text-sm text-gray-500">{{ expense.categoryName }}</div>
-                            </div>
+
+        <!-- Last 10 Days Expenses Chart -->
+        <div class="card p-6">
+            <h3 class="text-lg font-semibold text-foreground mb-4">Last 10 Days Expenses</h3>
+            <app-expense-by-month-chart [data]="dashboardData.expensesLast10Days"></app-expense-by-month-chart>
+        </div>
+    </div>
+
+    <!-- Recent Expenses -->
+    <div *ngIf="dashboardData" class="card">
+        <div class="px-6 py-5 border-b border-border">
+            <h3 class="text-lg font-semibold text-foreground">Recent Expenses</h3>
+        </div>
+        <div class="divide-y divide-border">
+            <div *ngFor="let expense of dashboardData.recentExpenses"
+                class="px-6 py-4 hover:bg-accent/50 transition-colors">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                        <div class="h-10 w-10 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0"
+                            [style.background-color]="expense.categoryColor || 'hsl(var(--muted))'">
+                            {{ expense.categoryName?.charAt(0) || '?' }}
                         </div>
-                        <div class="ml-2 flex-shrink-0 flex flex-col items-end">
-                            <div
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                ${{ expense.amount | number:'1.2-2' }}
-                            </div>
-                            <div class="text-sm text-gray-500 mt-1">
-                                {{ expense.date | date:'mediumDate' }}
-                            </div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-foreground truncate">{{ expense.description }}</p>
+                            <p class="text-sm text-muted-foreground">{{ expense.categoryName }}</p>
                         </div>
                     </div>
-                </li>
-                <li *ngIf="dashboardData.recentExpenses.length === 0"
-                    class="px-4 py-4 sm:px-6 text-center text-gray-500">
-                    No recent expenses found.
-                </li>
-            </ul>
+                    <div class="flex flex-col items-end gap-1 flex-shrink-0">
+                        <span class="text-sm font-semibold text-foreground">
+                            ${{ expense.amount | number:'1.2-2' }}
+                        </span>
+                        <span class="text-xs text-muted-foreground">
+                            {{ expense.date | date:'mediumDate' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="dashboardData.recentExpenses.length === 0" class="px-6 py-12 text-center">
+                <p class="text-muted-foreground">No recent expenses found.</p>
+            </div>
         </div>
     </div>
 </div>

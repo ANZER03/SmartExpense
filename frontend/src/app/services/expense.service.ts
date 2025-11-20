@@ -23,8 +23,9 @@ export interface DashboardData {
   totalSpent: number;
   monthlyBudget: number;
   recentExpenses: Expense[];
-  expensesByCategory: { category: string; amount: number; color: string }[];
-  monthlySpending: { month: string; amount: number }[];
+  expensesByCategory: { categoryName: string; amount: number; color: string }[];
+  expensesByMonth: { month: string; amount: number }[];
+  expensesLast10Days: { date: string; amount: number }[];
 }
 
 @Injectable({

@@ -48,8 +48,16 @@ export class ExpenseFormComponent implements OnInit {
   }
 
   loadCategories() {
-    this.expenseService.getCategories().subscribe(categories => {
-      this.categories = categories;
+    this.expenseService.getCategories().subscribe({
+      next: (categories) => {
+        this.categories = categories;
+        console.log('Categories loaded:', categories);
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+        // Set empty array to prevent undefined errors
+        this.categories = [];
+      }
     });
   }
 

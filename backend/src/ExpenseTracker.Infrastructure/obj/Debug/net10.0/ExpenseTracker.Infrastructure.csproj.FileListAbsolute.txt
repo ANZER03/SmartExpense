@@ -15,3 +15,4 @@ C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infra
 C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net10.0\ExpenseTracker.Infrastructure.pdb
 C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net10.0\ExpenseTracker.Infrastructure.genruntimeconfig.cache
 C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net10.0\ref\ExpenseTracker.Infrastructure.dll
+C:\Users\UTENTE\Desktop\Projects\budget_tracker\backend\src\ExpenseTracker.Infrastructure\obj\Debug\net10.0\ExpenseTracker.Infrastructure.sourcelink.json

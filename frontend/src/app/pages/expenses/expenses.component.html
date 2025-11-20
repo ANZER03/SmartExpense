@@ -1,80 +1,86 @@
-<div class="space-y-6">
+<div class="space-y-6 animate-fade-in">
     <div class="flex justify-between items-center">
-        <h1 class="text-2xl font-semibold text-gray-900">Expenses</h1>
-        <button (click)="openAddModal()"
-            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <div>
+            <h1 class="text-3xl font-bold tracking-tight text-foreground">Expenses</h1>
+            <p class="text-muted-foreground mt-1">Manage your expenses</p>
+        </div>
+        <button (click)="openAddModal()" class="btn btn-primary px-4 py-2">
             Add Expense
         </button>
     </div>
 
     <!-- Filters -->
-    <div class="bg-white p-4 shadow rounded-lg flex items-center space-x-4">
-        <label for="category-filter" class="text-sm font-medium text-gray-700">Filter by Category:</label>
-        <select id="category-filter" [(ngModel)]="selectedCategoryId" (change)="onFilterChange()"
-            class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md max-w-xs">
-            <option [ngValue]="null">All Categories</option>
-            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-        </select>
+    <div class="card p-4">
+        <div class="flex items-center gap-4">
+            <label for="category-filter" class="text-sm font-medium text-foreground">Filter by Category:</label>
+            <select id="category-filter" [(ngModel)]="selectedCategoryId" (change)="onFilterChange()"
+                class="input max-w-xs">
+                <option [ngValue]="null">All Categories</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+        </div>
     </div>
 
     <!-- Expense List -->
-    <div class="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul class="divide-y divide-gray-200">
-            <li *ngFor="let expense of expenses" class="px-4 py-4 sm:px-6 hover:bg-gray-50">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center flex-1 min-w-0">
-                        <div class="flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center text-white font-bold"
-                            [style.background-color]="expense.categoryColor || '#ccc'">
+    <div class="card">
+        <div class="divide-y divide-border">
+            <div *ngFor="let expense of expenses" class="px-6 py-4 hover:bg-accent/50 transition-colors">
+                <div class="flex items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 flex-1 min-w-0">
+                        <div class="h-10 w-10 rounded-full flex items-center justify-center text-white font-semibold text-sm flex-shrink-0"
+                            [style.background-color]="expense.categoryColor || 'hsl(var(--muted))'">
                             {{ expense.categoryName?.charAt(0) || '?' }}
                         </div>
-                        <div class="ml-4 flex-1 min-w-0">
-                            <div class="text-sm font-medium text-indigo-600 truncate">{{ expense.description }}</div>
-                            <div class="text-sm text-gray-500">{{ expense.categoryName }}</div>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium text-foreground truncate">{{ expense.description }}</p>
+                            <p class="text-sm text-muted-foreground">{{ expense.categoryName }}</p>
                         </div>
                     </div>
-                    <div class="ml-4 flex-shrink-0 flex items-center space-x-4">
-                        <div class="flex flex-col items-end">
-                            <div
-                                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    <div class="flex items-center gap-6 flex-shrink-0">
+                        <div class="flex flex-col items-end gap-1">
+                            <span class="text-sm font-semibold text-foreground">
                                 ${{ expense.amount | number:'1.2-2' }}
-                            </div>
-                            <div class="text-sm text-gray-500 mt-1">
+                            </span>
+                            <span class="text-xs text-muted-foreground">
                                 {{ expense.date | date:'mediumDate' }}
-                            </div>
+                            </span>
                         </div>
-                        <div class="flex space-x-2">
+                        <div class="flex gap-2">
                             <button (click)="openEditModal(expense)"
-                                class="text-indigo-600 hover:text-indigo-900">Edit</button>
+                                class="text-sm text-foreground hover:underline underline-offset-4">
+                                Edit
+                            </button>
                             <button (click)="deleteExpense(expense.id)"
-                                class="text-red-600 hover:text-red-900">Delete</button>
+                                class="text-sm text-destructive hover:underline underline-offset-4">
+                                Delete
+                            </button>
                         </div>
                     </div>
                 </div>
-            </li>
-            <li *ngIf="expenses.length === 0 && !loading" class="px-4 py-10 text-center text-gray-500">
-                No expenses found.
-            </li>
-            <li *ngIf="loading" class="px-4 py-10 text-center text-gray-500">
-                Loading expenses...
-            </li>
-        </ul>
+            </div>
+            <div *ngIf="expenses.length === 0 && !loading" class="px-6 py-12 text-center">
+                <p class="text-muted-foreground">No expenses found.</p>
+            </div>
+            <div *ngIf="loading" class="px-6 py-12 text-center">
+                <p class="text-muted-foreground">Loading expenses...</p>
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- Modal -->
-<div *ngIf="showModal" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
+<div *ngIf="showModal" class="fixed z-50 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog"
     aria-modal="true">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"
-            (click)="closeModal()"></div>
+        <div class="fixed inset-0 bg-black/50 transition-opacity" aria-hidden="true" (click)="closeModal()"></div>
 
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
         <div
-            class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-            <div class="absolute top-0 right-0 pt-4 pr-4">
+            class="inline-block align-bottom card text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full p-6">
+            <div class="absolute top-4 right-4">
                 <button (click)="closeModal()" type="button"
-                    class="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    class="text-muted-foreground hover:text-foreground transition-colors">
                     <span class="sr-only">Close</span>
                     <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor" aria-hidden="true">
@@ -83,17 +89,12 @@
                     </svg>
                 </button>
             </div>
-            <div class="sm:flex sm:items-start">
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                        {{ editingExpense ? 'Edit Expense' : 'Add Expense' }}
-                    </h3>
-                    <div class="mt-4">
-                        <app-expense-form [expense]="editingExpense" (save)="onSaveExpense($event)"
-                            (cancel)="closeModal()">
-                        </app-expense-form>
-                    </div>
-                </div>
+            <div class="mt-3">
+                <h3 class="text-lg font-semibold text-foreground mb-4" id="modal-title">
+                    {{ editingExpense ? 'Edit Expense' : 'Add Expense' }}
+                </h3>
+                <app-expense-form [expense]="editingExpense" (save)="onSaveExpense($event)" (cancel)="closeModal()">
+                </app-expense-form>
             </div>
         </div>
     </div>
